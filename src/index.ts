@@ -11,14 +11,18 @@ async function ethBalance(addresses: string[], provider: ethers.Provider) {
 }
 
 async function ERC20Balance(addresses: string[], contractAddress: string, provider: ethers.Provider) {
-  const token = new ethers.Contract(contractAddress, ['function balanceOf(address addr) view returns (uint)'], provider);
+  const contract = new ethers.Contract(contractAddress, ['function balanceOf(address addr) view returns (uint)'], provider);
+  const balances = await Promise.all(addresses.map((address) => contract.balanceOf(address)));
+  let sum = 0n;
+  balances.forEach((balance) => sum += balance);
+  return sum;
 }
 
 async function main() {
   const addresses = getAddresses(fs.readFileSync('./.addresses.txt', 'utf8'));
-  const provider = new ethers.JsonRpcProvider('https://mainnet.infura.io/v3/89d62adb179b4b7a8f028347dd5a1cc5');
-  const sum = await ethBalance(addresses, provider);
-  console.log(ethers.formatEther(sum));
+  const provider = new ethers.JsonRpcProvider('https://arbitrum-mainnet.infura.io/v3/89d62adb179b4b7a8f028347dd5a1cc5');
+  const k = await ERC20Balance(addresses, '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9', provider)
+  console.log(ethers.formatUnits(k, 6));
 }
 
 main();
