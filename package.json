@@ -11,7 +11,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "ethers": "^5.7.2",
+    "ethers": "^6.3.0",
     "global-agent": "^3.0.0"
   }
 }
