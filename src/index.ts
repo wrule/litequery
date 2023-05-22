@@ -10,6 +10,10 @@ async function ethBalance(addresses: string[], provider: ethers.Provider) {
   return sum;
 }
 
+async function ERC20Balance(addresses: string[], contractAddress: string, provider: ethers.Provider) {
+  const token = new ethers.Contract(contractAddress, null as any, provider);
+}
+
 async function main() {
   const addresses = getAddresses(fs.readFileSync('./.addresses.txt', 'utf8'));
   const provider = new ethers.JsonRpcProvider('https://mainnet.infura.io/v3/89d62adb179b4b7a8f028347dd5a1cc5');
