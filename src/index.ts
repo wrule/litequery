@@ -11,7 +11,7 @@ async function ethBalance(addresses: string[], provider: ethers.Provider) {
 }
 
 async function ERC20Balance(addresses: string[], contractAddress: string, provider: ethers.Provider) {
-  const token = new ethers.Contract(contractAddress, null as any, provider);
+  const token = new ethers.Contract(contractAddress, ['function balanceOf(address addr) view returns (uint)'], provider);
 }
 
 async function main() {
